@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.finrobotics.neyyasample">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ConnectActivity"
+            android:label="@string/app_name" />
+
+        <service
+            android:name=".MyService"
+            android:label="My Service"
+            android:process=".NeyyaProcess" />
+
+        <activity
+            android:name=".hue.quickstart.PHHomeActivity"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".hue.quickstart.MyApplicationActivity"
+            android:label="@string/txt_selectbridges"/>
+        <activity
+            android:name=".hue.quickstart.PHPushlinkActivity"
+            android:label="@string/app_name"/>
+
+    </application>
+
+</manifest>
