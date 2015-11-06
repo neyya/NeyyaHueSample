@@ -71,16 +71,17 @@ public class PHHomeActivity extends AppCompatActivity implements OnItemClickList
         prefs = HueSharedPreferences.getInstance(getApplicationContext());
         String lastIpAddress = prefs.getLastConnectedIPAddress();
         String lastUsername = prefs.getUsername();
-
         // Automatically try to connect to the last connected IP Address.  For multiple bridge support a different implementation is required.
         if (lastIpAddress != null && !lastIpAddress.equals("")) {
             PHAccessPoint lastAccessPoint = new PHAccessPoint();
             lastAccessPoint.setIpAddress(lastIpAddress);
             lastAccessPoint.setUsername(lastUsername);
-
             if (!phHueSDK.isAccessPointConnected(lastAccessPoint)) {
                 PHWizardAlertDialog.getInstance().showProgressDialog(R.string.connecting, PHHomeActivity.this);
                 phHueSDK.connect(lastAccessPoint);
+            }
+            else{
+               startMainActivity();
             }
         } else {  // First time use, so perform a bridge search.
             doBridgeSearch();
@@ -202,8 +203,6 @@ public class PHHomeActivity extends AppCompatActivity implements OnItemClickList
                         }
                     });
                 }
-
-
             }
         }
 
@@ -274,6 +273,7 @@ public class PHHomeActivity extends AppCompatActivity implements OnItemClickList
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             intent.addFlags(0x8000); // equal to Intent.FLAG_ACTIVITY_CLEAR_TASK which is only available from API level 11
         startActivity(intent);
+        finish();
     }
 
 }

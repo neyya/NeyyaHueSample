@@ -135,12 +135,18 @@ public class ConnectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ConnectActivity.this, PHHomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
 
         Intent intent = getIntent();
-        mSelectedDevice = (NeyyaDevice) intent.getSerializableExtra("SELECTED_DEVICE");
+        NeyyaDevice tempDevice = (NeyyaDevice) intent.getSerializableExtra("SELECTED_DEVICE");
+        if (tempDevice != null) {
+            AppConstants.selectedDevice = tempDevice;
+        }
+        mSelectedDevice = AppConstants.selectedDevice;
         if (mSelectedDevice != null) {
             setName(mSelectedDevice.getName());
             setAddress(mSelectedDevice.getAddress());
@@ -157,6 +163,8 @@ public class ConnectActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.connectmenu, menu);
         connectMenuItem = menu.findItem(R.id.action_connect);
+        final Intent intent = new Intent(MyService.BROADCAST_COMMAND_GET_STATE);
+        sendBroadcast(intent);
         return true;
     }
 
